@@ -1,7 +1,7 @@
-variable "tenant_id" {
-  description = "Azure Tentant ID"
+variable "location" {
+  description = "Azure Location for resources"
 }
 
-variable "subscription_id" {
-  description = "Azure Subscription ID"
+variable "subscription_name" {
+  description = "Azure Location for resources"
 }
