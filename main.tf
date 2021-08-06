@@ -30,14 +30,16 @@ resource "azurerm_key_vault_secret" "linux-user" {
 }
 
 module "windows-password" {
-  source  = "git::https://github.com/aq-terraform-modules/terraform-azure-credential.git?ref=dev"
+  source  = "app.terraform.io/aq-tf-cloud/credential/azure"
+  version = "1.0.0"
   type                = "password"
   secret_name         = "windows-admin-password"
   key_vault_id        = data.azurerm_key_vault.myvault.id
 }
 
 module "linux-ssh-key" {
-  source  = "git::https://github.com/aq-terraform-modules/terraform-azure-credential.git?ref=dev"
+  source  = "app.terraform.io/aq-tf-cloud/credential/azure"
+  version = "1.0.0"
   type                  = "ssh"
   secret_name           = "linux-user-private-ssh-key"
   storage_account_name  = "${lower(var.name_prefix)}storageaccount"
