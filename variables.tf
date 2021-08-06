@@ -7,7 +7,7 @@ variable "name_prefix" {
   default     = "ANHQUACH"
 }
 
-variable "admin_user" {
+variable "admin_username" {
   description = "Admin user for VMs"
   default     = "remote_admin"
 }
