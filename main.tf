@@ -1,4 +1,4 @@
-resource "azurerm_resource_group" "test-rg" {
-  name      = "Terraform Test RG"
+resource "azurerm_resource_group" "example" {
+  name      = "example"
   location  = local.location
 }
