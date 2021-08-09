@@ -1,11 +1,17 @@
+locals {
+  # name_prefix = var.subscription_name
+  name_prefix = var.name_prefix
+  location = var.location
+}
+
 data "azurerm_key_vault" "myvault" {
-  name                = "${lower(var.name_prefix)}-keyvault"
-  resource_group_name = "${var.name_prefix}-SVRG"
+  name                = "${lower(local.name_prefix)}-keyvault"
+  resource_group_name = "${local.name_prefix}-SVRG"
 }
 
 data "azurerm_storage_account" "example" {
-  name                = "${lower(var.name_prefix)}storageaccount"
-  resource_group_name = "${var.name_prefix}-SVRG"
+  name                = "${lower(local.name_prefix)}storageaccount"
+  resource_group_name = "${local.name_prefix}-SVRG"
 }
 
 # =================================== #
@@ -42,7 +48,15 @@ module "linux-ssh-key" {
   version = "1.0.0"
   type                  = "ssh"
   secret_name           = "linux-user-private-ssh-key"
-  storage_account_name  = "${lower(var.name_prefix)}storageaccount"
+  storage_account_name  = "${lower(local.name_prefix)}storageaccount"
   key_vault_id          = data.azurerm_key_vault.myvault.id
 }
 # =================================== #
+
+# Create base network for all resources
+module "base-network" {
+  source  = "git::https://github.com/aq-terraform-modules/terraform-azure-base-network.git?ref=dev"
+
+  name_prefix = local.name_prefix
+  location = local.location
+}
