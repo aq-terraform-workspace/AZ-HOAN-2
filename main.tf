@@ -77,6 +77,10 @@ module "vm_k8s_cluster" {
   subnet_id = module.base_network.subnet_private_id
   admin_username = local.admin_username
   ssh_public_key = module.linux_ssh_key.ssh_public_key
+
+  depends_on = [
+    module.base_network
+  ]
 }
 
 resource "azurerm_resource_group" "bastion_rg" {
@@ -102,4 +106,8 @@ module "bastion_vm" {
   os_image_publisher = local.bastion_os_image_info["publisher"]
   os_image_offer = local.bastion_os_image_info["offer"]
   os_image_sku = local.bastion_os_image_info["sku"]
+
+  depends_on = [
+    module.base_network
+  ]
 }
