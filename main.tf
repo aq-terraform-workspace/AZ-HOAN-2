@@ -79,10 +79,19 @@ module "vm_k8s_cluster" {
   ssh_public_key = module.linux_ssh_key.ssh_public_key
 }
 
+resource "azurerm_resource_group" "bastion_rg" {
+  name = "${local.name_prefix}-bastion"
+  location = local.location
+
+  lifecycle {
+    ignore_changes = [tags]
+  }
+}
+
 module "bastion_vm" {
   source  = "git::https://github.com/aq-terraform-modules/terraform-azure-simple-vm.git?ref=dev"
 
-  resource_group_name = "${local.name_prefix}-bastion"
+  resource_group_name = azurerm_resource_group.bastion_rg.name
   vm_name = "bastion"
   location = local.location
   subnet_id = module.base_network.subnet_public_id
