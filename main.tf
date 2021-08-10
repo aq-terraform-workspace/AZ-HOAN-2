@@ -3,10 +3,15 @@ locals {
   name_prefix = var.name_prefix
   location = var.location
   admin_username = "remote_admin"
-  bastion_os_image_info = {
+  windows_os_image_info = {
     publisher = "MicrosoftWindowsServer"
     offer = "WindowsServer"
     sku = "2016-Datacenter"
+  }
+  linux_os_image_info = {
+    publisher = "Canonical"
+    offer = "0001-com-ubuntu-server-focal"
+    sku = "20_04-lts-gen2"
   }
 }
 
@@ -68,7 +73,7 @@ module "base_network" {
 }
 
 # Create K8S cluster using VMs
-module "vm_k8s_cluster" {
+/* module "vm_k8s_cluster" {
   source  = "git::https://github.com/aq-terraform-modules/terraform-azure-vm-k8s-cluster.git?ref=dev"
 
   resource_group_name = "${local.name_prefix}-k8s"
@@ -83,6 +88,7 @@ module "vm_k8s_cluster" {
   ]
 }
 
+# Create resource group for bastion host
 resource "azurerm_resource_group" "bastion_rg" {
   name = "${local.name_prefix}-bastion"
   location = local.location
@@ -92,6 +98,7 @@ resource "azurerm_resource_group" "bastion_rg" {
   }
 }
 
+# Create bastion host using windows VM
 module "bastion_vm" {
   source  = "git::https://github.com/aq-terraform-modules/terraform-azure-simple-vm.git?ref=dev"
 
@@ -103,9 +110,40 @@ module "bastion_vm" {
   is_public = true
   admin_username = local.admin_username
   admin_password = module.windows_password.value
-  os_image_publisher = local.bastion_os_image_info["publisher"]
-  os_image_offer = local.bastion_os_image_info["offer"]
-  os_image_sku = local.bastion_os_image_info["sku"]
+  os_image_publisher = local.windows_os_image_info["publisher"]
+  os_image_offer = local.windows_os_image_info["offer"]
+  os_image_sku = local.windows_os_image_info["sku"]
+
+  depends_on = [
+    module.base_network
+  ]
+} */
+
+# Create resource group for bastion host
+resource "azurerm_resource_group" "dc_rg" {
+  name = "${local.name_prefix}-dc"
+  location = local.location
+
+  lifecycle {
+    ignore_changes = [tags]
+  }
+}
+
+# Create bastion host using windows VM
+module "bastion_vm" {
+  source  = "git::https://github.com/aq-terraform-modules/terraform-azure-simple-vm.git?ref=dev"
+
+  resource_group_name = azurerm_resource_group.bastion_rg.name
+  vm_name = "dc"
+  location = local.location
+  subnet_id = module.base_network.subnet_private
+  os_type = "windows"
+  is_public = false
+  admin_username = local.admin_username
+  admin_password = module.windows_password.value
+  os_image_publisher = local.windows_os_image_info["publisher"]
+  os_image_offer = local.windows_os_image_info["offer"]
+  os_image_sku = local.windows_os_image_info["sku"]
 
   depends_on = [
     module.base_network
