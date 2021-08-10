@@ -35,7 +35,7 @@ resource "azurerm_key_vault_secret" "linux-user" {
   }
 }
 
-module "windows-password" {
+module "windows_password" {
   source  = "app.terraform.io/aq-tf-cloud/credential/azure"
   version = "1.0.0"
   type                = "password"
@@ -43,7 +43,7 @@ module "windows-password" {
   key_vault_id        = data.azurerm_key_vault.myvault.id
 }
 
-module "linux-ssh-key" {
+module "linux_ssh_key" {
   source  = "app.terraform.io/aq-tf-cloud/credential/azure"
   version = "1.0.0"
   type                  = "ssh"
@@ -52,11 +52,21 @@ module "linux-ssh-key" {
   key_vault_id          = data.azurerm_key_vault.myvault.id
 }
 # =================================== #
-
 # Create base network for all resources
-module "base-network" {
+module "base_network" {
   source  = "git::https://github.com/aq-terraform-modules/terraform-azure-base-network.git?ref=dev_new_approach"
 
-  name_prefix = local.name_prefix
+  resource_group_name = "${local.name_prefix}-WLRG"
+  virtual_network_name = "${local.name_prefix}-VNET"
   location = local.location
 }
+
+# Create K8S cluster using VMs
+/* module "vm_k8s_cluster" {
+  source  = "git::https://github.com/aq-terraform-modules/terraform-azure-base-network.git?ref=dev_new_approach"
+
+  resource_group_name = "${local.name_prefix}-WLRG"
+  virtual_network_name = "${local.name_prefix}-VNET"
+  location = local.location
+}
+ */
