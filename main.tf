@@ -133,6 +133,7 @@ resource "azurerm_resource_group" "dc_rg" {
 module "bastion_vm" {
   source  = "git::https://github.com/aq-terraform-modules/terraform-azure-simple-vm.git?ref=dev"
 
+  vm_count = 2
   resource_group_name = azurerm_resource_group.dc_rg.name
   vm_name = "dc"
   location = local.location
