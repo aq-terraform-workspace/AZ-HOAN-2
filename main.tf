@@ -55,7 +55,7 @@ module "linux-ssh-key" {
 
 # Create base network for all resources
 module "base-network" {
-  source  = "git::https://github.com/aq-terraform-modules/terraform-azure-base-network.git?ref=dev_new_approach "
+  source  = "git::https://github.com/aq-terraform-modules/terraform-azure-base-network.git?ref=dev_new_approach"
 
   name_prefix = local.name_prefix
   location = local.location
