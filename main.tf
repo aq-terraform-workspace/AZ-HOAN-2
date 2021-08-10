@@ -119,7 +119,7 @@ module "bastion_vm" {
   ]
 } */
 
-# Create resource group for bastion host
+# Create resource group for domain controller
 resource "azurerm_resource_group" "dc_rg" {
   name = "${local.name_prefix}-dc"
   location = local.location
@@ -129,7 +129,7 @@ resource "azurerm_resource_group" "dc_rg" {
   }
 }
 
-# Create bastion host using windows VM
+# Create domain controllers using windows VM
 module "bastion_vm" {
   source  = "git::https://github.com/aq-terraform-modules/terraform-azure-simple-vm.git?ref=dev"
 
