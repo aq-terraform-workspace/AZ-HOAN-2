@@ -211,11 +211,11 @@ resource "azurerm_resource_group" "ansible" {
   }
 }
 
-module "client_linux" {
+module "ansible" {
   source  = "git::https://github.com/aq-terraform-modules/terraform-azure-simple-vm.git?ref=dev"
 
   resource_group_name = azurerm_resource_group.ansible.name
-  vm_name = "ansible-awx"
+  vm_name = "ansible"
   location = local.location
   subnet_id = module.base_network.subnet_public_id
   os_type = "linux"
