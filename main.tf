@@ -133,10 +133,10 @@ resource "azurerm_resource_group" "dc_rg" {
 module "bastion_vm" {
   source  = "git::https://github.com/aq-terraform-modules/terraform-azure-simple-vm.git?ref=dev"
 
-  resource_group_name = azurerm_resource_group.bastion_rg.name
+  resource_group_name = azurerm_resource_group.dc_rg.name
   vm_name = "dc"
   location = local.location
-  subnet_id = module.base_network.subnet_private
+  subnet_id = module.base_network.subnet_private_id
   os_type = "windows"
   is_public = false
   admin_username = local.admin_username
