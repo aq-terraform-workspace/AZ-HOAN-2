@@ -89,7 +89,7 @@ module "bastion_vm" {
   os_type = "windows"
   is_public = true
   admin_username = local.admin_username
-  admin_password = module.windows_password.Value
+  admin_password = module.windows_password.value
   os_image_publisher = local.bastion_os_image_info["publisher"]
   os_image_offer = local.bastion_os_image_info["offer"]
   os_image_sku = local.bastion_os_image_info["sku"]
