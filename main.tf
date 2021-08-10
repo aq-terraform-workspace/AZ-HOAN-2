@@ -63,7 +63,7 @@ module "base_network" {
 }
 
 # Create K8S cluster using VMs
-module "vm_k8s_cluster" {
+/* module "vm_k8s_cluster" {
   source  = "git::https://github.com/aq-terraform-modules/terraform-azure-vm-k8s-cluster.git?ref=dev"
 
   resource_group_name = "${local.name_prefix}-k8s"
@@ -73,3 +73,4 @@ module "vm_k8s_cluster" {
   admin_username = local.admin_username
   ssh_public_key = module.linux_ssh_key.ssh_public_key
 }
+ */
