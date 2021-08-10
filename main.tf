@@ -80,7 +80,7 @@ module "vm_k8s_cluster" {
 }
 
 module "bastion_vm" {
-  source  = "git::https://github.com/aq-terraform-modules/terraform-azure-vm-k8s-cluster.git?ref=dev"
+  source  = "git::https://github.com/aq-terraform-modules/terraform-azure-simple-vm.git?ref=dev"
 
   resource_group_name = "${local.name_prefix}-bastion"
   vm_name = "${local.name_prefix}-bastion"
