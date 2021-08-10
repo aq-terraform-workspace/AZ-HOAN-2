@@ -2,6 +2,7 @@ locals {
   # name_prefix = var.subscription_name
   name_prefix = var.name_prefix
   location = var.location
+  admin_username = "matdecha"
 }
 
 data "azurerm_key_vault" "myvault" {
@@ -62,11 +63,13 @@ module "base_network" {
 }
 
 # Create K8S cluster using VMs
-/* module "vm_k8s_cluster" {
-  source  = "git::https://github.com/aq-terraform-modules/terraform-azure-base-network.git?ref=dev_new_approach"
+module "vm_k8s_cluster" {
+  source  = "git::https://github.com/aq-terraform-modules/terraform-azure-vm-k8s-cluster.git?ref=dev_new_approach"
 
-  resource_group_name = "${local.name_prefix}-WLRG"
-  virtual_network_name = "${local.name_prefix}-VNET"
+  resource_group_name = "${local.name_prefix}-k8s"
+  vm_name = "${local.name_prefix}-k8s"
   location = local.location
+  subnet_id = module.base_network.subnet_private_id
+  admin_username = local.admin_username
+  ssh_public_key = module.linux_ssh_key.ssh_public_key
 }
- */
