@@ -68,11 +68,11 @@ module "base_network" {
 }
 
 # Create K8S cluster using VMs
-module "vm_k8s_cluster" {
+/* module "vm_k8s_cluster" {
   source  = "git::https://github.com/aq-terraform-modules/terraform-azure-vm-k8s-cluster.git?ref=dev"
 
   resource_group_name = "${local.name_prefix}-k8s"
-  vm_name = "${local.name_prefix}-k8s"
+  vm_name = "k8s"
   location = local.location
   subnet_id = module.base_network.subnet_private_id
   admin_username = local.admin_username
@@ -83,7 +83,7 @@ module "bastion_vm" {
   source  = "git::https://github.com/aq-terraform-modules/terraform-azure-simple-vm.git?ref=dev"
 
   resource_group_name = "${local.name_prefix}-bastion"
-  vm_name = "${local.name_prefix}-bastion"
+  vm_name = "bastion"
   location = local.location
   subnet_id = module.base_network.subnet_public_id
   os_type = "windows"
@@ -93,4 +93,4 @@ module "bastion_vm" {
   os_image_publisher = local.bastion_os_image_info["publisher"]
   os_image_offer = local.bastion_os_image_info["offer"]
   os_image_sku = local.bastion_os_image_info["sku"]
-}
+} */
