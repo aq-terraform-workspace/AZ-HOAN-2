@@ -2,7 +2,7 @@
 terraform {
   required_providers {
     azurerm = {
-      source = "hashicorp/azurerm"
+      source  = "hashicorp/azurerm"
       version = ">= 2.70"
     }
   }
@@ -10,7 +10,7 @@ terraform {
 
 provider "azurerm" {
   features {
-    
+
   }
 }
 
@@ -18,7 +18,7 @@ provider "azurerm" {
 # Replace these values to your own
 terraform {
   backend "remote" {
-    hostname = "app.terraform.io"
+    hostname     = "app.terraform.io"
     organization = "aq-tf-cloud"
 
     workspaces {

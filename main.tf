@@ -1,17 +1,17 @@
 locals {
   # name_prefix = var.subscription_name
-  name_prefix = var.name_prefix
-  location = var.location
+  name_prefix    = var.name_prefix
+  location       = var.location
   admin_username = "remote_admin"
   windows_os_image_info = {
     publisher = "MicrosoftWindowsServer"
-    offer = "WindowsServer"
-    sku = "2016-Datacenter"
+    offer     = "WindowsServer"
+    sku       = "2016-Datacenter"
   }
   linux_os_image_info = {
     publisher = "Canonical"
-    offer = "0001-com-ubuntu-server-focal"
-    sku = "20_04-lts-gen2"
+    offer     = "0001-com-ubuntu-server-focal"
+    sku       = "20_04-lts-gen2"
   }
 }
 
@@ -31,13 +31,13 @@ data "azurerm_storage_account" "example" {
 # =================================== #
 # Push admin user to keyvault for later use
 resource "azurerm_key_vault_secret" "linux-user" {
-  key_vault_id         = data.azurerm_key_vault.myvault.id
-  name                 = "admin-user"
-  value                = var.admin_username
+  key_vault_id = data.azurerm_key_vault.myvault.id
+  name         = "admin-user"
+  value        = var.admin_username
 
   tags = {
-    Name        = "admin-user"
-    DeployDate  = replace(timestamp(), "/T.*$/", "")
+    Name       = "admin-user"
+    DeployDate = replace(timestamp(), "/T.*$/", "")
   }
 
   lifecycle {
@@ -47,29 +47,29 @@ resource "azurerm_key_vault_secret" "linux-user" {
 }
 
 module "windows_password" {
-  source  = "app.terraform.io/aq-tf-cloud/credential/azure"
-  version = "1.0.0"
-  type                = "password"
-  secret_name         = "windows-admin-password"
-  key_vault_id        = data.azurerm_key_vault.myvault.id
+  source       = "app.terraform.io/aq-tf-cloud/credential/azure"
+  version      = "1.0.0"
+  type         = "password"
+  secret_name  = "windows-admin-password"
+  key_vault_id = data.azurerm_key_vault.myvault.id
 }
 
 module "linux_ssh_key" {
-  source  = "app.terraform.io/aq-tf-cloud/credential/azure"
-  version = "1.0.0"
-  type                  = "ssh"
-  secret_name           = "linux-user-private-ssh-key"
-  storage_account_name  = "${lower(local.name_prefix)}storageaccount"
-  key_vault_id          = data.azurerm_key_vault.myvault.id
+  source               = "app.terraform.io/aq-tf-cloud/credential/azure"
+  version              = "1.0.0"
+  type                 = "ssh"
+  secret_name          = "linux-user-private-ssh-key"
+  storage_account_name = "${lower(local.name_prefix)}storageaccount"
+  key_vault_id         = data.azurerm_key_vault.myvault.id
 }
 # =================================== #
 # Create base network for all resources
 module "base_network" {
-  source  = "git::https://github.com/aq-terraform-modules/terraform-azure-base-network.git?ref=dev_new_approach"
+  source = "git::https://github.com/aq-terraform-modules/terraform-azure-base-network.git?ref=dev_new_approach"
 
-  resource_group_name = "${local.name_prefix}-WLRG"
+  resource_group_name  = "${local.name_prefix}-WLRG"
   virtual_network_name = "${local.name_prefix}-VNET"
-  location = local.location
+  location             = local.location
 }
 
 # Create K8S cluster using VMs
@@ -121,7 +121,7 @@ module "bastion_vm" {
 
 # Create resource group for domain controller
 resource "azurerm_resource_group" "dc_rg" {
-  name = "${local.name_prefix}-dc"
+  name     = "${local.name_prefix}-dc"
   location = local.location
 
   lifecycle {
@@ -131,20 +131,20 @@ resource "azurerm_resource_group" "dc_rg" {
 
 # Create domain controllers using windows VM
 module "dc" {
-  source  = "git::https://github.com/aq-terraform-modules/terraform-azure-simple-vm.git?ref=dev"
+  source = "git::https://github.com/aq-terraform-modules/terraform-azure-simple-vm.git?ref=dev"
 
-  vm_count = 2
+  vm_count            = 2
   resource_group_name = azurerm_resource_group.dc_rg.name
-  vm_name = "dc"
-  location = local.location
-  subnet_id = module.base_network.subnet_private_id
-  os_type = "windows"
-  is_public = false
-  admin_username = local.admin_username
-  admin_password = module.windows_password.value
-  os_image_publisher = local.windows_os_image_info["publisher"]
-  os_image_offer = local.windows_os_image_info["offer"]
-  os_image_sku = local.windows_os_image_info["sku"]
+  vm_name             = "dc"
+  location            = local.location
+  subnet_id           = module.base_network.subnet_private_id
+  os_type             = "windows"
+  is_public           = false
+  admin_username      = local.admin_username
+  admin_password      = module.windows_password.value
+  os_image_publisher  = local.windows_os_image_info["publisher"]
+  os_image_offer      = local.windows_os_image_info["offer"]
+  os_image_sku        = local.windows_os_image_info["sku"]
 
   depends_on = [
     module.base_network
@@ -153,7 +153,7 @@ module "dc" {
 
 # Create resource group for client VM that will connect to the AD
 resource "azurerm_resource_group" "clients" {
-  name = "${local.name_prefix}-clients"
+  name     = "${local.name_prefix}-clients"
   location = local.location
 
   lifecycle {
@@ -162,19 +162,19 @@ resource "azurerm_resource_group" "clients" {
 }
 
 module "client_windows" {
-  source  = "git::https://github.com/aq-terraform-modules/terraform-azure-simple-vm.git?ref=dev"
+  source = "git::https://github.com/aq-terraform-modules/terraform-azure-simple-vm.git?ref=dev"
 
   resource_group_name = azurerm_resource_group.clients.name
-  vm_name = "win-client"
-  location = local.location
-  subnet_id = module.base_network.subnet_private_id
-  os_type = "windows"
-  is_public = false
-  admin_username = local.admin_username
-  admin_password = module.windows_password.value
-  os_image_publisher = local.windows_os_image_info["publisher"]
-  os_image_offer = local.windows_os_image_info["offer"]
-  os_image_sku = local.windows_os_image_info["sku"]
+  vm_name             = "win-client"
+  location            = local.location
+  subnet_id           = module.base_network.subnet_private_id
+  os_type             = "windows"
+  is_public           = false
+  admin_username      = local.admin_username
+  admin_password      = module.windows_password.value
+  os_image_publisher  = local.windows_os_image_info["publisher"]
+  os_image_offer      = local.windows_os_image_info["offer"]
+  os_image_sku        = local.windows_os_image_info["sku"]
 
   depends_on = [
     module.base_network
@@ -182,19 +182,19 @@ module "client_windows" {
 }
 
 module "client_linux" {
-  source  = "git::https://github.com/aq-terraform-modules/terraform-azure-simple-vm.git?ref=dev"
+  source = "git::https://github.com/aq-terraform-modules/terraform-azure-simple-vm.git?ref=dev"
 
   resource_group_name = azurerm_resource_group.clients.name
-  vm_name = "linux-client"
-  location = local.location
-  subnet_id = module.base_network.subnet_private_id
-  os_type = "linux"
-  is_public = false
-  admin_username = local.admin_username
-  ssh_public_key = module.linux_ssh_key.ssh_public_key
-  os_image_publisher = local.linux_os_image_info["publisher"]
-  os_image_offer = local.linux_os_image_info["offer"]
-  os_image_sku = local.linux_os_image_info["sku"]
+  vm_name             = "linux-client"
+  location            = local.location
+  subnet_id           = module.base_network.subnet_private_id
+  os_type             = "linux"
+  is_public           = false
+  admin_username      = local.admin_username
+  ssh_public_key      = module.linux_ssh_key.ssh_public_key
+  os_image_publisher  = local.linux_os_image_info["publisher"]
+  os_image_offer      = local.linux_os_image_info["offer"]
+  os_image_sku        = local.linux_os_image_info["sku"]
 
   depends_on = [
     module.base_network
@@ -203,7 +203,7 @@ module "client_linux" {
 
 # Create resource group for ansible awx
 resource "azurerm_resource_group" "ansible" {
-  name = "${local.name_prefix}-ansible"
+  name     = "${local.name_prefix}-ansible"
   location = local.location
 
   lifecycle {
@@ -212,19 +212,19 @@ resource "azurerm_resource_group" "ansible" {
 }
 
 module "ansible" {
-  source  = "git::https://github.com/aq-terraform-modules/terraform-azure-simple-vm.git?ref=dev"
+  source = "git::https://github.com/aq-terraform-modules/terraform-azure-simple-vm.git?ref=dev"
 
   resource_group_name = azurerm_resource_group.ansible.name
-  vm_name = "ansible"
-  location = local.location
-  subnet_id = module.base_network.subnet_public_id
-  os_type = "linux"
-  is_public = true
-  admin_username = local.admin_username
-  ssh_public_key = module.linux_ssh_key.ssh_public_key
-  os_image_publisher = local.linux_os_image_info["publisher"]
-  os_image_offer = local.linux_os_image_info["offer"]
-  os_image_sku = local.linux_os_image_info["sku"]
+  vm_name             = "ansible"
+  location            = local.location
+  subnet_id           = module.base_network.subnet_public_id
+  os_type             = "linux"
+  is_public           = true
+  admin_username      = local.admin_username
+  ssh_public_key      = module.linux_ssh_key.ssh_public_key
+  os_image_publisher  = local.linux_os_image_info["publisher"]
+  os_image_offer      = local.linux_os_image_info["offer"]
+  os_image_sku        = local.linux_os_image_info["sku"]
 
   depends_on = [
     module.base_network
