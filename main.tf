@@ -120,7 +120,7 @@ module "bastion_vm" {
 } */
 
 # Create resource group for domain controller
-resource "azurerm_resource_group" "dc_rg" {
+/* resource "azurerm_resource_group" "dc_rg" {
   name     = "${local.name_prefix}-dc"
   location = local.location
 
@@ -157,7 +157,7 @@ module "dc" {
   depends_on = [
     module.base_network
   ]
-}
+} */
 
 # Create resource group for client VM that will connect to the AD
 /* resource "azurerm_resource_group" "clients" {
