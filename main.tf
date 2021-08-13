@@ -77,10 +77,6 @@ resource "azurerm_resource_group" "ansible" {
   name     = "${local.name_prefix}-ansible"
   location = local.location
 
-  tags = {
-    applicationRole = "ansible"
-  }
-
   lifecycle {
     ignore_changes = [tags]
   }
@@ -101,10 +97,8 @@ module "ansible" {
   os_image_offer      = local.linux_os_image_info["offer"]
   os_image_sku        = local.linux_os_image_info["sku"]
 
-  tags = {
-    applicationRole = "ansible"
-    os              = "linux"
-  }
+    # Tag values
+  tag_applicationRole = "ansible"
 
   depends_on = [
     module.base_network
@@ -153,19 +147,18 @@ module "bastion_vm" {
   os_image_offer      = local.windows_os_image_info["offer"]
   os_image_sku        = local.windows_os_image_info["sku"]
 
+  # Tag values
+  tag_applicationRole = "bastion"
+
   depends_on = [
     module.base_network
   ]
 } */
 
 # Create resource group for domain controller
-/* resource "azurerm_resource_group" "dc_rg" {
+resource "azurerm_resource_group" "dc_rg" {
   name     = "${local.name_prefix}-dc"
   location = local.location
-
-  tags = {
-    applicationRole = "dc"
-  }
 
   lifecycle {
     ignore_changes = [tags]
@@ -189,10 +182,8 @@ module "dc" {
   os_image_offer      = local.windows_os_image_info["offer"]
   os_image_sku        = local.windows_os_image_info["sku"]
 
-  tags = {
-    applicationRole = "dc"
-    os              = "windows"
-  }
+  # Tag values
+  tag_applicationRole = "dc"
 
   depends_on = [
     module.base_network
@@ -203,10 +194,6 @@ module "dc" {
 resource "azurerm_resource_group" "clients" {
   name     = "${local.name_prefix}-clients"
   location = local.location
-
-  tags = {
-    applicationRole = "client"
-  }
 
   lifecycle {
     ignore_changes = [tags]
@@ -228,10 +215,8 @@ module "client_windows" {
   os_image_offer      = local.windows_os_image_info["offer"]
   os_image_sku        = local.windows_os_image_info["sku"]
 
-  tags = {
-    applicationRole = "client"
-    os              = "windows"
-  }
+  # Tag values
+  tag_applicationRole = "client"
 
   depends_on = [
     module.base_network
@@ -253,12 +238,10 @@ module "client_linux" {
   os_image_offer      = local.linux_os_image_info["offer"]
   os_image_sku        = local.linux_os_image_info["sku"]
 
-  tags = {
-    applicationRole = "client"
-    os              = "linux"
-  }
+  # Tag value
+  tag_applicationRole = "client"
 
   depends_on = [
     module.base_network
   ]
-} */
+}
