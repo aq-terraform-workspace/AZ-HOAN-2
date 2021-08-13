@@ -72,6 +72,45 @@ module "base_network" {
   location             = local.location
 }
 
+# Create resource group for ansible awx
+resource "azurerm_resource_group" "ansible" {
+  name     = "${local.name_prefix}-ansible"
+  location = local.location
+
+  tags = {
+    applicationRole = "ansible"
+  }
+
+  lifecycle {
+    ignore_changes = [tags]
+  }
+}
+
+module "ansible" {
+  source = "git::https://github.com/aq-terraform-modules/terraform-azure-simple-vm.git?ref=dev"
+
+  resource_group_name = azurerm_resource_group.ansible.name
+  vm_name             = "ansible"
+  location            = local.location
+  subnet_id           = module.base_network.subnet_public_id
+  os_type             = "linux"
+  is_public           = true
+  admin_username      = local.admin_username
+  ssh_public_key      = module.linux_ssh_key.ssh_public_key
+  os_image_publisher  = local.linux_os_image_info["publisher"]
+  os_image_offer      = local.linux_os_image_info["offer"]
+  os_image_sku        = local.linux_os_image_info["sku"]
+
+  tags = {
+    applicationRole = "ansible"
+    os              = "linux"
+  }
+
+  depends_on = [
+    module.base_network
+  ]
+}
+
 # Create K8S cluster using VMs
 /* module "vm_k8s_cluster" {
   source = "git::https://github.com/aq-terraform-modules/terraform-azure-vm-k8s-cluster.git?ref=dev"
@@ -120,7 +159,7 @@ module "bastion_vm" {
 } */
 
 # Create resource group for domain controller
-resource "azurerm_resource_group" "dc_rg" {
+/* resource "azurerm_resource_group" "dc_rg" {
   name     = "${local.name_prefix}-dc"
   location = local.location
 
@@ -152,6 +191,7 @@ module "dc" {
 
   tags = {
     applicationRole = "dc"
+    os              = "windows"
   }
 
   depends_on = [
@@ -160,9 +200,13 @@ module "dc" {
 }
 
 # Create resource group for client VM that will connect to the AD
-/* resource "azurerm_resource_group" "clients" {
+resource "azurerm_resource_group" "clients" {
   name     = "${local.name_prefix}-clients"
   location = local.location
+
+  tags = {
+    applicationRole = "client"
+  }
 
   lifecycle {
     ignore_changes = [tags]
@@ -184,6 +228,11 @@ module "client_windows" {
   os_image_offer      = local.windows_os_image_info["offer"]
   os_image_sku        = local.windows_os_image_info["sku"]
 
+  tags = {
+    applicationRole = "client"
+    os              = "windows"
+  }
+
   depends_on = [
     module.base_network
   ]
@@ -204,45 +253,12 @@ module "client_linux" {
   os_image_offer      = local.linux_os_image_info["offer"]
   os_image_sku        = local.linux_os_image_info["sku"]
 
-  depends_on = [
-    module.base_network
-  ]
-} */
-
-# Create resource group for ansible awx
-resource "azurerm_resource_group" "ansible" {
-  name     = "${local.name_prefix}-ansible"
-  location = local.location
-
   tags = {
-    applicationRole = "ansible"
-  }
-
-  lifecycle {
-    ignore_changes = [tags]
-  }
-}
-
-module "ansible" {
-  source = "git::https://github.com/aq-terraform-modules/terraform-azure-simple-vm.git?ref=dev"
-
-  resource_group_name = azurerm_resource_group.ansible.name
-  vm_name             = "ansible"
-  location            = local.location
-  subnet_id           = module.base_network.subnet_public_id
-  os_type             = "linux"
-  is_public           = true
-  admin_username      = local.admin_username
-  ssh_public_key      = module.linux_ssh_key.ssh_public_key
-  os_image_publisher  = local.linux_os_image_info["publisher"]
-  os_image_offer      = local.linux_os_image_info["offer"]
-  os_image_sku        = local.linux_os_image_info["sku"]
-
-  tags = {
-    applicationRole = "ansible"
+    applicationRole = "client"
+    os              = "linux"
   }
 
   depends_on = [
     module.base_network
   ]
-}
+} */
