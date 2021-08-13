@@ -156,7 +156,7 @@ module "bastion_vm" {
 } */
 
 # Create resource group for domain controller
-resource "azurerm_resource_group" "dc_rg" {
+/* resource "azurerm_resource_group" "dc_rg" {
   name     = "${local.name_prefix}-dc"
   location = local.location
 
@@ -244,4 +244,4 @@ module "client_linux" {
   depends_on = [
     module.base_network
   ]
-}
+} */
