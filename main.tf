@@ -108,7 +108,7 @@ module "dc" {
 }
 
 # Create resource group for client VM that will connect to the AD
-resource "azurerm_resource_group" "clients" {
+/* resource "azurerm_resource_group" "clients" {
   name     = "${local.name_prefix}-clients"
   location = local.location
 
@@ -161,4 +161,4 @@ module "client_linux" {
   depends_on = [
     module.base_network
   ]
-}
+} */
