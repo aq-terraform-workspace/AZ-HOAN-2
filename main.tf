@@ -108,7 +108,7 @@ module "dc" {
 }
 
 # Create resource group for client VM that will connect to the AD
-/* resource "azurerm_resource_group" "clients" {
+resource "azurerm_resource_group" "clients" {
   name     = "${local.name_prefix}-clients"
   location = local.location
 
@@ -123,9 +123,9 @@ module "client_windows" {
   resource_group_name = azurerm_resource_group.clients.name
   vm_name             = "win-client"
   location            = local.location
-  subnet_id           = module.base_network.subnet_public_id
+  subnet_id           = module.base_network.subnet_private_id
   os_type             = "windows"
-  is_public           = true
+  is_public           = false
   admin_username      = local.admin_username
   admin_password      = module.windows_password.value
   os_image_publisher  = local.windows_os_image_info["publisher"]
@@ -140,7 +140,7 @@ module "client_windows" {
   ]
 }
 
-module "client_linux" {
+/* module "client_linux" {
   source = "git::https://github.com/aq-terraform-modules/terraform-azure-simple-vm.git?ref=dev"
 
   resource_group_name = azurerm_resource_group.clients.name
