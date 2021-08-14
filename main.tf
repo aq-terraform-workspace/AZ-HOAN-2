@@ -117,7 +117,7 @@ resource "azurerm_resource_group" "clients" {
   }
 }
 
-/* module "client_windows" {
+module "client_windows" {
   source = "git::https://github.com/aq-terraform-modules/terraform-azure-simple-vm.git?ref=dev"
 
   resource_group_name = azurerm_resource_group.clients.name
@@ -138,7 +138,7 @@ resource "azurerm_resource_group" "clients" {
   depends_on = [
     module.base_network
   ]
-} */
+}
 
 /* module "client_linux" {
   source = "git::https://github.com/aq-terraform-modules/terraform-azure-simple-vm.git?ref=dev"
