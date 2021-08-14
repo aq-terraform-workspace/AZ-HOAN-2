@@ -12,7 +12,7 @@
   depends_on = [
     module.base_network
   ]
-}
+} */
 
 # Create resource group for bastion host
 resource "azurerm_resource_group" "bastion_rg" {
@@ -46,4 +46,4 @@ module "bastion_vm" {
   depends_on = [
     module.base_network
   ]
-} */
+}
