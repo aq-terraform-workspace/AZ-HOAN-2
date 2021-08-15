@@ -83,7 +83,7 @@ resource "azurerm_resource_group" "dc_rg" {
 }
 
 # Create domain controllers using windows VM
-module "dc" {
+/* module "dc" {
   source = "git::https://github.com/aq-terraform-modules/terraform-azure-simple-vm.git?ref=dev"
 
   vm_count            = 2
@@ -161,4 +161,4 @@ module "client_linux" {
   depends_on = [
     module.base_network
   ]
-}
+} */
