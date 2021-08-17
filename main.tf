@@ -140,7 +140,7 @@ module "client_windows" {
   ]
 }
 
-/* module "client_linux" {
+module "client_linux" {
   source = "git::https://github.com/aq-terraform-modules/terraform-azure-simple-vm.git?ref=dev"
 
   resource_group_name = azurerm_resource_group.clients.name
@@ -162,4 +162,3 @@ module "client_windows" {
     module.base_network
   ]
 }
- */
