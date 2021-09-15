@@ -86,7 +86,7 @@ resource "azurerm_resource_group_template_deployment" "example" {
     "Owner": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', '8e3af657-a8ff-443c-a75c-2fe8c4bcb635')]",
     "Contributor": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
     "Reader": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', 'acdd72a7-3385-48ef-bd42-f606fba81ae7')]",
-    "scopeSub": "[subscription().id]",
+    "scopeSub": "ab98a41c-62e7-4873-b479-125537eea0cd",
     "sas": "?sv=2019-02-02&st=2020-06-24T00%3A29%3A01Z&se=2030-06-25T00%3A29%3A00Z&sr=c&sp=r&sig=b8ZTNoY46IANeOadIpzSfEXaBcwymkEhF8v3ICnKhps%3D",
     "azureCloudEnvironment": "AzureGlobalCloud"
   },
