@@ -1,6 +1,6 @@
 resource "azurerm_resource_group" "startstopvm" {
   name     = "${local.name_prefix}-StartStopVM"
-  location = local.location
+  location = "southcentralus"
 
   lifecycle {
     ignore_changes = [tags]
