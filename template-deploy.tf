@@ -95,7 +95,6 @@ resource "azurerm_resource_group_template_deployment" "example" {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2018-05-01",
       "name": "StartStopV2_Automation",
-      "resourceGroup": "[parameters('resourceGroupName')]",
       "dependsOn": [ "[resourceId('Microsoft.Resources/resourceGroups/', parameters('resourceGroupName'))]" ],
       "properties": {
         "mode": "Incremental",
@@ -118,7 +117,6 @@ resource "azurerm_resource_group_template_deployment" "example" {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2018-05-01",
       "name": "StartStopV2_CreateAlerts",
-      "resourceGroup": "[parameters('resourceGroupName')]",
       "dependsOn": [ "[resourceId('Microsoft.Resources/resourceGroups/', parameters('resourceGroupName'))]", "StartStopV2_Automation" ],
       "properties": {
         "mode": "Incremental",
@@ -137,7 +135,6 @@ resource "azurerm_resource_group_template_deployment" "example" {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2018-05-01",
       "name": "StartStopV2_AzDashboard",
-      "resourceGroup": "[parameters('resourceGroupName')]",
       "dependsOn": [ "[resourceId('Microsoft.Resources/resourceGroups/', parameters('resourceGroupName'))]", "StartStopV2_Automation", "StartStopV2_CreateAlerts" ],
       "properties": {
         "mode": "Incremental",
