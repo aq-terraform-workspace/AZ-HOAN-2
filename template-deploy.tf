@@ -95,7 +95,6 @@ resource "azurerm_resource_group_template_deployment" "example" {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2018-05-01",
       "name": "StartStopV2_Automation",
-      "dependsOn": [ "[resourceId('Microsoft.Resources/resourceGroups/', parameters('resourceGroupName'))]" ],
       "properties": {
         "mode": "Incremental",
         "templateLink": {
@@ -117,7 +116,7 @@ resource "azurerm_resource_group_template_deployment" "example" {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2018-05-01",
       "name": "StartStopV2_CreateAlerts",
-      "dependsOn": [ "[resourceId('Microsoft.Resources/resourceGroups/', parameters('resourceGroupName'))]", "StartStopV2_Automation" ],
+      "dependsOn": ["StartStopV2_Automation" ],
       "properties": {
         "mode": "Incremental",
         "templateLink": {
@@ -135,7 +134,7 @@ resource "azurerm_resource_group_template_deployment" "example" {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2018-05-01",
       "name": "StartStopV2_AzDashboard",
-      "dependsOn": [ "[resourceId('Microsoft.Resources/resourceGroups/', parameters('resourceGroupName'))]", "StartStopV2_Automation", "StartStopV2_CreateAlerts" ],
+      "dependsOn": ["StartStopV2_Automation", "StartStopV2_CreateAlerts" ],
       "properties": {
         "mode": "Incremental",
         "templateLink": {
@@ -152,7 +151,7 @@ resource "azurerm_resource_group_template_deployment" "example" {
       "type": "Microsoft.Authorization/roleAssignments",
       "apiVersion": "2019-04-01-preview",
       "name": "[guid(uniqueString(parameters('resourceGroupName')))]",
-      "dependsOn": [ "[resourceId('Microsoft.Resources/resourceGroups/', parameters('resourceGroupName'))]", "StartStopV2_Automation", "StartStopV2_CreateAlerts", "StartStopV2_AzDashboard" ],
+      "dependsOn": ["StartStopV2_Automation", "StartStopV2_CreateAlerts", "StartStopV2_AzDashboard" ],
       "properties": {
         "roleDefinitionId": "[variables('Contributor')]",
         "principalId": "[reference('StartStopV2_Automation').outputs.pId.value]",
