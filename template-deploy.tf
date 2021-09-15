@@ -1,18 +1,18 @@
-resource "azurerm_subscription_template_deployment" "example" {
-  name             = "example-deployment"
+resource "azurerm_subscription_template_deployment" "startstop" {
+  name             = "StartStop"
   location         = "West Europe"
   parameters_content = jsonencode({
     "resourceGroupName" = {
-      value = "${local.name_prefix}-StartStopVM"
+      value = "${local.name_prefix}-StartStop"
     },
     "resourceGroupRegion" = {
       value = "southcentralus"
     },
     "azureFunctionAppName" = {
-      value = "${local.name_prefix}-StartStopVM"
+      value = "${local.name_prefix}-StartStop"
     },
     "applicationInsightsName" = {
-      value = "${local.name_prefix}-StartStopVM"
+      value = "${local.name_prefix}-StartStop"
     },
     "applicationInsightsRegion" = {
       value = "southcentralus"
