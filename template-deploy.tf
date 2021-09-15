@@ -28,7 +28,7 @@ resource "azurerm_resource_group_template_deployment" "example" {
       value = "southcentralus"
     },
     "storageAccountName" = {
-      value = "${local.name_prefix}StartStopVM"
+      value = "startstopvm"
     }
   })
   template_content = <<TEMPLATE
