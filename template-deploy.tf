@@ -151,7 +151,7 @@ resource "azurerm_subscription_template_deployment" "example" {
     },
     {
       "type": "Microsoft.Authorization/roleAssignments",
-      "apiVersion": "2019-09-01-preview",
+      "apiVersion": "2019-04-01-preview",
       "name": "[guid(uniqueString(parameters('resourceGroupName')))]",
       "dependsOn": [ "[resourceId('Microsoft.Resources/resourceGroups/', parameters('resourceGroupName'))]", "StartStopV2_Automation", "StartStopV2_CreateAlerts", "StartStopV2_AzDashboard" ],
       "properties": {
