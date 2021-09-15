@@ -1,16 +1,6 @@
-resource "azurerm_resource_group" "startstopvm" {
-  name     = "${local.name_prefix}-StartStopVM"
-  location = "southcentralus"
-
-  lifecycle {
-    ignore_changes = [tags]
-  }
-}
-
-resource "azurerm_resource_group_template_deployment" "example" {
-  name                = "${local.name_prefix}-StartStopVM"
-  resource_group_name = azurerm_resource_group.startstopvm.name
-  deployment_mode     = "Incremental"
+/* resource "azurerm_subscription_template_deployment" "example" {
+  name             = "example-deployment"
+  location         = "West Europe"
   parameters_content = jsonencode({
     "resourceGroupName" = {
       value = "${local.name_prefix}-StartStopVM"
@@ -42,7 +32,7 @@ resource "azurerm_resource_group_template_deployment" "example" {
     },
     "resourceGroupRegion": {
       "type": "string",
-      "defaultValue": "southcentralus",
+      "defaultValue": "eastus",
       "metadata": { "description": "The region where the resource group containing the Start/Stop components will be located." }
     },
     "azureFunctionAppName": {
@@ -57,7 +47,7 @@ resource "azurerm_resource_group_template_deployment" "example" {
     },
     "applicationInsightsRegion": {
       "type": "string",
-      "defaultValue": "southcentralus",
+      "defaultValue": "eastus",
       "metadata": { "description": "The region where the Application Insights instance for Start/Stop Analytics will be located." }
     },
     "storageAccountName": {
@@ -86,15 +76,25 @@ resource "azurerm_resource_group_template_deployment" "example" {
     "Owner": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', '8e3af657-a8ff-443c-a75c-2fe8c4bcb635')]",
     "Contributor": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
     "Reader": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', 'acdd72a7-3385-48ef-bd42-f606fba81ae7')]",
-    "scopeSub": "ab98a41c-62e7-4873-b479-125537eea0cd",
+    "scopeSub": "[subscription().id]",
     "sas": "?sv=2019-02-02&st=2020-06-24T00%3A29%3A01Z&se=2030-06-25T00%3A29%3A00Z&sr=c&sp=r&sig=b8ZTNoY46IANeOadIpzSfEXaBcwymkEhF8v3ICnKhps%3D",
     "azureCloudEnvironment": "AzureGlobalCloud"
   },
   "resources": [
     {
+      "name": "[parameters('resourceGroupName')]",
+      "type": "Microsoft.Resources/resourceGroups",
+      "apiVersion": "2018-05-01",
+      "location": "[parameters('resourceGroupRegion')]",
+      "tags": { "SolutionName": "StartStopV2" },
+      "properties": {}
+    },
+    {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2018-05-01",
       "name": "StartStopV2_Automation",
+      "resourceGroup": "[parameters('resourceGroupName')]",
+      "dependsOn": [ "[resourceId('Microsoft.Resources/resourceGroups/', parameters('resourceGroupName'))]" ],
       "properties": {
         "mode": "Incremental",
         "templateLink": {
@@ -116,7 +116,8 @@ resource "azurerm_resource_group_template_deployment" "example" {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2018-05-01",
       "name": "StartStopV2_CreateAlerts",
-      "dependsOn": ["StartStopV2_Automation" ],
+      "resourceGroup": "[parameters('resourceGroupName')]",
+      "dependsOn": [ "[resourceId('Microsoft.Resources/resourceGroups/', parameters('resourceGroupName'))]", "StartStopV2_Automation" ],
       "properties": {
         "mode": "Incremental",
         "templateLink": {
@@ -134,7 +135,8 @@ resource "azurerm_resource_group_template_deployment" "example" {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2018-05-01",
       "name": "StartStopV2_AzDashboard",
-      "dependsOn": ["StartStopV2_Automation", "StartStopV2_CreateAlerts" ],
+      "resourceGroup": "[parameters('resourceGroupName')]",
+      "dependsOn": [ "[resourceId('Microsoft.Resources/resourceGroups/', parameters('resourceGroupName'))]", "StartStopV2_Automation", "StartStopV2_CreateAlerts" ],
       "properties": {
         "mode": "Incremental",
         "templateLink": {
@@ -149,9 +151,9 @@ resource "azurerm_resource_group_template_deployment" "example" {
     },
     {
       "type": "Microsoft.Authorization/roleAssignments",
-      "apiVersion": "2019-04-01-preview",
+      "apiVersion": "2019-09-01-preview",
       "name": "[guid(uniqueString(parameters('resourceGroupName')))]",
-      "dependsOn": ["StartStopV2_Automation", "StartStopV2_CreateAlerts", "StartStopV2_AzDashboard" ],
+      "dependsOn": [ "[resourceId('Microsoft.Resources/resourceGroups/', parameters('resourceGroupName'))]", "StartStopV2_Automation", "StartStopV2_CreateAlerts", "StartStopV2_AzDashboard" ],
       "properties": {
         "roleDefinitionId": "[variables('Contributor')]",
         "principalId": "[reference('StartStopV2_Automation').outputs.pId.value]",
@@ -162,12 +164,8 @@ resource "azurerm_resource_group_template_deployment" "example" {
   ],
   "outputs": {}
 }
-TEMPLATE
+ TEMPLATE
 
   // NOTE: whilst we show an inline template here, we recommend
   // sourcing this from a file for readability/editor support
-}
-
-output arm_example_output {
-  value = jsondecode(azurerm_resource_group_template_deployment.example.output_content).exampleOutput.value
-}
+} */
