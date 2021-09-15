@@ -1,4 +1,4 @@
-# Create resource group for ansible awx
+/* # Create resource group for ansible awx
 resource "azurerm_resource_group" "ansible" {
   name     = "${local.name_prefix}-ansible"
   location = local.location
@@ -29,4 +29,4 @@ module "ansible" {
   depends_on = [
     module.base_network
   ]
-}
+} */

@@ -15,7 +15,7 @@
 } */
 
 # Create resource group for bastion host
-resource "azurerm_resource_group" "bastion_rg" {
+/* resource "azurerm_resource_group" "bastion_rg" {
   name     = "${local.name_prefix}-bastion"
   location = local.location
 
@@ -46,4 +46,4 @@ module "bastion_vm" {
   depends_on = [
     module.base_network
   ]
-}
+} */
