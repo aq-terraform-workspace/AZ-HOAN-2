@@ -1,4 +1,4 @@
-/* resource "azurerm_subscription_template_deployment" "example" {
+resource "azurerm_subscription_template_deployment" "example" {
   name             = "example-deployment"
   location         = "West Europe"
   parameters_content = jsonencode({
@@ -168,4 +168,4 @@
 
   // NOTE: whilst we show an inline template here, we recommend
   // sourcing this from a file for readability/editor support
-} */
+}
