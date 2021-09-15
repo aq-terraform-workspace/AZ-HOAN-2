@@ -1,4 +1,4 @@
-resource "azurerm_subscription_template_deployment" "startstop" {
+/* resource "azurerm_subscription_template_deployment" "startstop" {
   name             = "StartStop"
   location         = "West Europe"
   parameters_content = jsonencode({
@@ -168,4 +168,4 @@ resource "azurerm_subscription_template_deployment" "startstop" {
 
   // NOTE: whilst we show an inline template here, we recommend
   // sourcing this from a file for readability/editor support
-}
+} */
