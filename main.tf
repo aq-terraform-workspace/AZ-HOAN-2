@@ -96,7 +96,7 @@ module "dc" {
   depends_on = [
     module.base_network
   ]
-}
+} */
 
 module "client_windows" {
   source = "git::https://github.com/aq-terraform-modules/terraform-azure-simple-vm.git?ref=dev"
@@ -121,7 +121,7 @@ module "client_windows" {
   ]
 }
 
-module "client_linux" {
+/* module "client_linux" {
   source = "git::https://github.com/aq-terraform-modules/terraform-azure-simple-vm.git?ref=dev"
 
   resource_group_name = "${local.name_prefix}-clients"
