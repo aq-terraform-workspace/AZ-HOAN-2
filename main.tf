@@ -96,7 +96,7 @@ module "dc" {
   depends_on = [
     module.base_network
   ]
-} */
+}
 
 module "client_windows" {
   source = "git::https://github.com/aq-terraform-modules/terraform-azure-simple-vm.git?ref=dev"
@@ -109,8 +109,6 @@ module "client_windows" {
   is_public           = false
   admin_username      = local.admin_username
   admin_password      = module.windows_password.value
-  service_rg_name      = "${lower(local.name_prefix)}-SVRG"
-  public_dns_zone_name = local.public_dns_zone_name
   os_image_publisher  = local.windows_os_image_info["publisher"]
   os_image_offer      = local.windows_os_image_info["offer"]
   os_image_sku        = local.windows_os_image_info["sku"]
@@ -123,7 +121,7 @@ module "client_windows" {
   ]
 }
 
-/* module "client_linux" {
+module "client_linux" {
   source = "git::https://github.com/aq-terraform-modules/terraform-azure-simple-vm.git?ref=dev"
 
   resource_group_name = "${local.name_prefix}-clients"
