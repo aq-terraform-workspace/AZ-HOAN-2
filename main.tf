@@ -64,7 +64,7 @@ module "linux_ssh_key" {
 }
 # =================================== #
 # Create base network for all resources
-/* module "base_network" {
+module "base_network" {
   source = "git::https://github.com/aq-terraform-modules/terraform-azure-base-network.git?ref=dev_new_approach"
 
   resource_group_name  = "${local.name_prefix}-WLRG"
@@ -82,7 +82,7 @@ resource "azurerm_resource_group" "dc_rg" {
   }
 }
 
-# Create domain controllers using windows VM
+/* # Create domain controllers using windows VM
 module "dc" {
   source = "git::https://github.com/aq-terraform-modules/terraform-azure-simple-vm.git?ref=dev"
 
