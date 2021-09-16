@@ -13,7 +13,7 @@ module "vm_k8s_cluster" {
     module.base_network
   ]
 }
-
+/* 
 # Create bastion host using windows VM
 module "bastion_vm" {
   source = "git::https://github.com/aq-terraform-modules/terraform-azure-simple-vm.git?ref=dev"
@@ -36,4 +36,4 @@ module "bastion_vm" {
   depends_on = [
     module.base_network
   ]
-}
+} */
