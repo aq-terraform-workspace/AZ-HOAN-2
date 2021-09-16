@@ -27,7 +27,7 @@ module "bastion_vm" {
   admin_username       = local.admin_username
   admin_password       = module.windows_password.value
   service_rg_name      = "${lower(local.name_prefix)}-SVRG"
-  public_dns_zone_name = local.public_dns_zone_name
+  # public_dns_zone_name = local.public_dns_zone_name
   os_image_publisher   = local.windows_os_image_info["publisher"]
   os_image_offer       = local.windows_os_image_info["offer"]
   os_image_sku         = local.windows_os_image_info["sku"]
