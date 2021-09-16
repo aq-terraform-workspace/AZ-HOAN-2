@@ -72,22 +72,12 @@ module "base_network" {
   location             = local.location
 }
 
-/* # Create resource group for domain controller
-resource "azurerm_resource_group" "dc_rg" {
-  name     = "${local.name_prefix}-dc"
-  location = local.location
-
-  lifecycle {
-    ignore_changes = [tags]
-  }
-}
-
- # Create domain controllers using windows VM
+/* # Create domain controllers using windows VM
 module "dc" {
   source = "git::https://github.com/aq-terraform-modules/terraform-azure-simple-vm.git?ref=dev"
 
   vm_count            = 2
-  resource_group_name = azurerm_resource_group.dc_rg.name
+  resource_group_name = "${local.name_prefix}-dc"
   vm_name             = "dc"
   location            = local.location
   subnet_id           = module.base_network.subnet_private_id
@@ -107,20 +97,10 @@ module "dc" {
   ]
 }
 
-# Create resource group for client VM that will connect to the AD
-resource "azurerm_resource_group" "clients" {
-  name     = "${local.name_prefix}-clients"
-  location = local.location
-
-  lifecycle {
-    ignore_changes = [tags]
-  }
-}
-
 module "client_windows" {
   source = "git::https://github.com/aq-terraform-modules/terraform-azure-simple-vm.git?ref=dev"
 
-  resource_group_name = azurerm_resource_group.clients.name
+  resource_group_name = "${local.name_prefix}-clients"
   vm_name             = "win-client"
   location            = local.location
   subnet_id           = module.base_network.subnet_private_id
@@ -143,7 +123,8 @@ module "client_windows" {
 module "client_linux" {
   source = "git::https://github.com/aq-terraform-modules/terraform-azure-simple-vm.git?ref=dev"
 
-  resource_group_name = azurerm_resource_group.clients.name
+  resource_group_name = "${local.name_prefix}-clients"
+  create_rg           = false
   vm_name             = "linux-client"
   location            = local.location
   subnet_id           = module.base_network.subnet_private_id

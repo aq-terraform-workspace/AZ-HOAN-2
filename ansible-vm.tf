@@ -1,17 +1,7 @@
-/* # Create resource group for ansible awx
-resource "azurerm_resource_group" "ansible" {
-  name     = "${local.name_prefix}-ansible"
-  location = local.location
-
-  lifecycle {
-    ignore_changes = [tags]
-  }
-}
-
-module "ansible" {
+/* module "ansible" {
   source = "git::https://github.com/aq-terraform-modules/terraform-azure-simple-vm.git?ref=dev"
 
-  resource_group_name = azurerm_resource_group.ansible.name
+  resource_group_name = "${local.name_prefix}-ansible"
   vm_name             = "ansible"
   location            = local.location
   subnet_id           = module.base_network.subnet_public_id
