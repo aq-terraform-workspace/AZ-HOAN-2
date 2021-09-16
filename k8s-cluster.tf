@@ -1,9 +1,8 @@
 # Create K8S cluster using VMs
-module "vm_k8s_cluster" {
+/* module "vm_k8s_cluster" {
   source = "git::https://github.com/aq-terraform-modules/terraform-azure-vm-k8s-cluster.git?ref=dev"
 
   resource_group_name = "${local.name_prefix}-k8s"
-  vm_name             = "k8s"
   location            = local.location
   subnet_id           = module.base_network.subnet_private_id
   admin_username      = local.admin_username
@@ -12,7 +11,7 @@ module "vm_k8s_cluster" {
   depends_on = [
     module.base_network
   ]
-}
+} */
 
 # Create bastion host using windows VM
 module "bastion_vm" {
