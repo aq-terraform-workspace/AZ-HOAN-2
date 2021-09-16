@@ -15,3 +15,8 @@ variable "admin_username" {
   description = "Admin user for VMs"
   default     = "remote_admin"
 }
+
+variable "public_dns_zone_name" {
+  description = "Public DNS Zone name"
+  default     = ""
+}

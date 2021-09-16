@@ -1,8 +1,9 @@
 locals {
   # name_prefix = var.subscription_name
-  name_prefix    = var.name_prefix
-  location       = var.location
-  admin_username = "remote_admin"
+  name_prefix          = var.name_prefix
+  location             = var.location
+  public_dns_zone_name = var.public_dns_zone_name
+  admin_username       = "remote_admin"
   windows_os_image_info = {
     publisher = "MicrosoftWindowsServer"
     offer     = "WindowsServer"
