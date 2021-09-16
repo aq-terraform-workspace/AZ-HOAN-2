@@ -72,7 +72,7 @@ module "base_network" {
   location             = local.location
 }
 
-# Create resource group for domain controller
+/* # Create resource group for domain controller
 resource "azurerm_resource_group" "dc_rg" {
   name     = "${local.name_prefix}-dc"
   location = local.location
@@ -82,7 +82,7 @@ resource "azurerm_resource_group" "dc_rg" {
   }
 }
 
-/* # Create domain controllers using windows VM
+ # Create domain controllers using windows VM
 module "dc" {
   source = "git::https://github.com/aq-terraform-modules/terraform-azure-simple-vm.git?ref=dev"
 
