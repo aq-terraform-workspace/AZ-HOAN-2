@@ -40,12 +40,12 @@ module "pierrecardinvn_aci" {
 
   container_volume = [
     {
-      name = wwwroot
+      name = "wwwroot"
       quota = 50
       mount_path = "/www/wwwroot"
     },
     {
-      name = mysql
+      name = "mysql"
       quota = 5
       mount_path = "/www/server/data"
     },
