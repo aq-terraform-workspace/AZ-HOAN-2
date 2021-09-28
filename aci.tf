@@ -6,7 +6,7 @@ module "pierrecardinvn_aci" {
   aci_name            = "pierrecardinvn.com"
   dns_name_label      = "pierrecardinvn"
   container_name      = "aapanel"
-  container_image     = "sheid1309/aapanel:1.2"
+  container_image     = "sheid1309/aapanel:1.3"
   cpu                 = "2.5"
   memory              = "3"
 
@@ -30,7 +30,7 @@ module "pierrecardinvn_aci" {
   ]
 
   environment_variables = {
-    PORT = 8888
+    PANEL_PORT = 8888
   }
 
   secure_environment_variables = {

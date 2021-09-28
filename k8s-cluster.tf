@@ -8,7 +8,7 @@ module "vm_k8s_cluster" {
   admin_username      = local.admin_username
   ssh_public_key      = module.linux_ssh_key.ssh_public_key
   http_node_port      = 30004
-  https_node_port      = 30735
+  https_node_port     = 30735
 
   depends_on = [
     module.base_network
