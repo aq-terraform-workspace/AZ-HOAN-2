@@ -1,14 +1,15 @@
 module "pierrecardinvn_aci" {
   source = "git::https://github.com/aq-terraform-modules/terraform-aci.git?ref=dev"
 
-  resource_group_name = "pierrecardinvn.com"
-  location            = local.location
-  aci_name            = "pierrecardinvn.com"
-  dns_name_label      = "pierrecardinvn"
-  container_name      = "aapanel"
-  container_image     = "sheid1309/aapanel:1.3"
-  cpu                 = "2.5"
-  memory              = "3"
+  resource_group_name  = "pierrecardinvn.com"
+  location             = local.location
+  aci_name             = "pierrecardinvn.com"
+  dns_name_label       = "pierrecardinvn"
+  container_name       = "aapanel"
+  container_image      = "sheid1309/aapanel:1.3"
+  cpu                  = "2.5"
+  memory               = "3"
+  storage_account_name = "pierrecardindata"
 
   container_ports = [
     {
