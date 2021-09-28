@@ -36,4 +36,17 @@ module "pierrecardinvn_aci" {
   secure_environment_variables = {
     PANEL_PWD = "p@ssw0rd"
   }
+
+  volume = [
+    {
+      name = wwwroot
+      quota = 50
+      mount_path = "/www/wwwroot"
+    },
+    {
+      name = mysql
+      quota = 5
+      mount_path = "/www/server/data"
+    },
+  ]
 }
