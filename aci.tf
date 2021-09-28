@@ -37,7 +37,7 @@ module "pierrecardinvn_aci" {
     PANEL_PWD = "p@ssw0rd"
   }
 
-  volume = [
+  container_volume = [
     {
       name = wwwroot
       quota = 50
