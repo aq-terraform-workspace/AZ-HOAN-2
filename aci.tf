@@ -1,10 +1,9 @@
-/* module "pierrecardinvn_aci" {
+module "pierrecardinvn_aci" {
   source = "git::https://github.com/aq-terraform-modules/terraform-aci.git?ref=dev"
 
   resource_group_name  = "pierrecardinvn.com"
   location             = local.location
   aci_name             = "pierrecardinvn.com"
-  dns_name_label       = "pierrecardinvn"
   container_name       = "aapanel"
   container_image      = "sheid1309/aapanel:1.3"
   cpu                  = "2.5"
@@ -37,4 +36,4 @@
   secure_environment_variables = {
     PANEL_PWD = "p@ssw0rd"
   }
-} */
+}
