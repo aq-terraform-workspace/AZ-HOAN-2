@@ -1,4 +1,4 @@
-/* module "pierrecardinvn_aci" {
+module "pierrecardinvn_aci" {
   source = "git::https://github.com/aq-terraform-modules/terraform-aci.git?ref=dev"
 
   resource_group_name  = "pierrecardinvn.com"
@@ -37,17 +37,4 @@
   secure_environment_variables = {
     PANEL_PWD = "p@ssw0rd"
   }
-
-  container_volume = [
-    {
-      name = "wwwroot"
-      quota = 50
-      mount_path = "/www/wwwroot"
-    },
-    {
-      name = "mysql"
-      quota = 5
-      mount_path = "/www/server/data"
-    },
-  ]
-} */
+}
