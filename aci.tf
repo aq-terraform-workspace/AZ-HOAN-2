@@ -1,4 +1,4 @@
-module "pierrecardinvn_aci" {
+/* module "pierrecardinvn_aci" {
   source = "git::https://github.com/aq-terraform-modules/terraform-aci.git?ref=dev"
 
   resource_group_name  = "pierrecardinvn.com"
@@ -50,4 +50,4 @@ module "pierrecardinvn_aci" {
       mount_path = "/www/server/data"
     },
   ]
-}
+} */
