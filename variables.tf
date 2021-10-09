@@ -20,3 +20,11 @@ variable "public_dns_zone_name" {
   description = "Public DNS Zone name"
   default     = ""
 }
+
+variable "subscription_id" {
+  description = "Azure subscription ID"
+}
+
+variable "tenant_id" {
+  description = "Azure tenant ID"
+}
