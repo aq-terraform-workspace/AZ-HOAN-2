@@ -1,7 +1,7 @@
 locals {
-  subscription_id      = var.subscription_id
-  subscription_name    = var.subscription_name
-  tenant_id            = var.tenant_id
+  # subscription_id      = var.subscription_id
+  # subscription_name    = var.subscription_name
+  # tenant_id            = var.tenant_id
   name_prefix          = var.name_prefix
   location             = var.location
   public_dns_zone_name = var.public_dns_zone_name

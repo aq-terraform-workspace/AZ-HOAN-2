@@ -4,6 +4,7 @@ variable "location" {
 
 variable "subscription_name" {
   description = "Azure subscription name"
+  default     = ""
 }
 
 variable "name_prefix" {
@@ -21,10 +22,10 @@ variable "public_dns_zone_name" {
   default     = ""
 }
 
-variable "subscription_id" {
-  description = "Azure subscription ID"
-}
+# variable "subscription_id" {
+#   description = "Azure subscription ID"
+# }
 
-variable "tenant_id" {
-  description = "Azure tenant ID"
-}
+# variable "tenant_id" {
+#   description = "Azure tenant ID"
+# }
