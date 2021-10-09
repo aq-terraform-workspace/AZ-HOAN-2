@@ -1,6 +1,6 @@
 
 # Create bastion host using windows VM
-module "bastion_vm" {
+/* module "bastion_vm" {
   source = "git::https://github.com/aq-terraform-modules/terraform-azure-simple-vm.git?ref=dev"
 
   resource_group_name  = "${local.name_prefix}-bastion"
@@ -23,4 +23,4 @@ module "bastion_vm" {
   depends_on = [
     module.base_network
   ]
-}
+} */
