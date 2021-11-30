@@ -57,7 +57,7 @@ module "client" {
   source = "git::https://github.com/aq-terraform-modules/terraform-azure-simple-vm.git?ref=dev"
 
   resource_group_name  = "${local.name_prefix}-client"
-  vm_name              = "client-windows-10"
+  vm_name              = "client"
   vm_count             = 1
   location             = local.location
   subnet_id            = module.base_network.subnet_public_id
