@@ -11,7 +11,7 @@ module "vault_cluster" {
   os_type              = "linux"
   is_public            = true
   admin_username       = local.admin_username
-  ssh_public_key       = module.linux_ssh_key.value
+  ssh_public_key       = module.linux_ssh_key.ssh_public_key
   service_rg_name      = "${lower(local.name_prefix)}-SVRG"
   public_dns_zone_name = local.public_dns_zone_name
   os_image_publisher   = local.linux_os_image_info["publisher"]
