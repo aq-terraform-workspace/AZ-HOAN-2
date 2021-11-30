@@ -11,6 +11,11 @@ locals {
     offer     = "WindowsServer"
     sku       = "2016-Datacenter"
   }
+  windows10_os_image_info = {
+    publisher = "MicrosoftWindowsDesktop"
+    offer     = "Windows-10"
+    sku       = "19h1-pro-gensecond"
+  }
   linux_os_image_info = {
     publisher = "Canonical"
     offer     = "0001-com-ubuntu-server-focal"
