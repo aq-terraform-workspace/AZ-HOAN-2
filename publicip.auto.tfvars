@@ -3,8 +3,8 @@ public_ip_addresses = {
     name                    = "vngw"
     region                  = "primary"
     resource_group_key      = "network"
-    sku                     = "Standard"
-    allocation_method       = "Static"
+    sku                     = "Basic"
+    allocation_method       = "Dynamic"
     ip_version              = "IPv4"
     idle_timeout_in_minutes = "4"
   }
