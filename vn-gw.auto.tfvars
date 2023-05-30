@@ -23,7 +23,7 @@ virtual_network_gateways = {
       vpnconfig1 = {
         address_space = ["10.1.0.0/16"]
 
-        vpn_auth_types       = ["AAD"]
+        vpn_auth_types       = ["AAD", "Certificate"]
         vpn_client_protocols = ["OpenVPN"]
 
         aad_audience = "41b23e61-6c1e-4545-b367-cd054e0ed4b4" #Azure VPN Client ApplicationId
