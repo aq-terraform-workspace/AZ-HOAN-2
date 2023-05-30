@@ -5,7 +5,7 @@ variable "global_settings" {
   default = {
     default_region = "primary"
     regions = {
-      primary   = "southeastasia"
+      primary = "southeastasia"
     }
   }
 }

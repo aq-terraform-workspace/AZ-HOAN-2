@@ -27,5 +27,5 @@ resource_groups = {
 
 tags = {
   "environment" = "dev"
-  "project" = "prefect2"
+  "project"     = "prefect2"
 }

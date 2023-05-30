@@ -13,7 +13,7 @@ virtual_network_gateways = {
       ipconfig1 = {
         ipconfig_name         = "gatewayIp1"
         public_ip_address_key = "vn_gw"
-        vnet_key                      = "main"
+        vnet_key              = "main"
         # private_ip_address_allocation = "Static"
       }
     }

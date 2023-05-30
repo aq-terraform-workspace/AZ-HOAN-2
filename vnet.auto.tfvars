@@ -7,8 +7,8 @@ vnets = {
     }
     subnets = {
       aks = {
-        name              = "aks"
-        cidr              = ["10.0.0.0/20"]
+        name                                           = "aks"
+        cidr                                           = ["10.0.0.0/20"]
         enforce_private_link_endpoint_network_policies = true
       }
     }
