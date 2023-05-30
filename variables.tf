@@ -30,3 +30,10 @@ variable "network_security_group_definition" {
 variable "vnets" {
   default = {}
 }
+
+#####################################
+##    Compute
+#####################################
+variable "azure_container_registries" {
+  default = {}
+}

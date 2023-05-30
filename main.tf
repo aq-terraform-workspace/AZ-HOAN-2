@@ -20,4 +20,8 @@ module "caf" {
     # Nat GateWay
     # nat_gateways = var.nat_gateways
   }
+
+  compute = {
+    azure_container_registries = var.azure_container_registries
+  }
 }
