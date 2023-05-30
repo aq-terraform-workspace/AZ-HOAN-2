@@ -19,3 +19,14 @@ variable "tags" {
   type        = map(any)
   default     = {}
 }
+
+#####################################
+##    Networking
+#####################################
+variable "network_security_group_definition" {
+  default = {}
+}
+
+variable "vnets" {
+  default = {}
+}

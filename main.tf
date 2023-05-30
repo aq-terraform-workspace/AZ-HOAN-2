@@ -9,4 +9,15 @@ module "caf" {
   
   global_settings = var.global_settings
   resource_groups = var.resource_groups
+
+  # Networking
+  networking = {
+    network_security_group_definition = var.network_security_group_definition
+    vnets = var.vnets
+    # public_ip_addresses               = var.public_ip_addresses
+    # route_tables = var.route_tables
+    # azurerm_routes = var.azurerm_routes
+    # Nat GateWay
+    # nat_gateways = var.nat_gateways
+  }
 }
