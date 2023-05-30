@@ -35,6 +35,10 @@ variable "public_ip_addresses" {
   default = {}
 }
 
+variable "virtual_network_gateways" {
+  default = {}
+}
+
 #####################################
 ##    Compute
 #####################################

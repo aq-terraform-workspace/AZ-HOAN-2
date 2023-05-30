@@ -8,4 +8,13 @@ public_ip_addresses = {
     ip_version              = "IPv4"
     idle_timeout_in_minutes = "4"
   }
+  vn_gw = {
+    name                    = "vn-gw"
+    region                  = "primary"
+    resource_group_key      = "network"
+    sku                     = "Standard"
+    allocation_method       = "Dynamic"
+    ip_version              = "IPv4"
+    idle_timeout_in_minutes = "4"
+  }
 }
