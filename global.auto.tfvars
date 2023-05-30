@@ -3,8 +3,7 @@ global_settings = {
   regions = {
     primary = "southeastasia"
   }
-  prefix       = "prefect2"
-  environment  = "dev"
+  prefix       = "prefect2-dev"
   inherit_tags = true
 }
 
