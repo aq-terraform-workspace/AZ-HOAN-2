@@ -19,7 +19,6 @@ terraform {
 }
 
 provider "azurerm" {
-  skip_provider_registration = true
   features {
     api_management {
       purge_soft_delete_on_destroy = var.provider_azurerm_features_api_management.purge_soft_delete_on_destroy
@@ -61,6 +60,12 @@ provider "azurerm" {
       scale_to_zero_before_deletion = var.provider_azurerm_features_virtual_machine_scale_set.scale_to_zero_before_deletion
     }
   }
+}
+
+provider "azurerm" {
+  alias                      = "vhub"
+  skip_provider_registration = true
+  features {}
 }
 
 # Backend configuration
