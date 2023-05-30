@@ -14,7 +14,7 @@ virtual_network_gateways = {
         ipconfig_name         = "gatewayIp1"
         public_ip_address_key = "vngw"
         vnet_key                      = "main"
-        private_ip_address_allocation = "Static"
+        private_ip_address_allocation = "Dynamic"
       }
     }
 
@@ -27,6 +27,7 @@ virtual_network_gateways = {
         vpn_client_protocols = ["OpenVPN"]
 
         aad_audience = "41b23e61-6c1e-4545-b367-cd054e0ed4b4" #Azure VPN Client ApplicationId
+        # TODO: Should update to your corresponding TenantId: https://sts.windows.net/<TenantID>/
         aad_issuer   = "https://sts.windows.net/c14b46fc-2780-4bee-bcfa-e3f5a1c337b9/"
         aad_tenant   = "https://login.microsoftonline.com/c14b46fc-2780-4bee-bcfa-e3f5a1c337b9/"
 
