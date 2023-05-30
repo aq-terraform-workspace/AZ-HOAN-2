@@ -12,5 +12,11 @@ vnets = {
         enforce_private_link_endpoint_network_policies = true
       }
     }
+    specialsubnets = {
+      GatewaySubnet = {
+        name = "GatewaySubnet" # must be named GatewaySubnet
+        cidr = ["10.0.240.0/20"]
+      }
+    }
   }
 }
