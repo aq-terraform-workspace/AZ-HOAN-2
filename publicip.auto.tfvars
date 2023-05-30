@@ -1,7 +1,6 @@
 public_ip_addresses = {
   vngw = {
     name                    = "vn-gw"
-    region                  = "primary"
     resource_group_key      = "network"
     sku                     = "Standard"
     allocation_method       = "Static"
