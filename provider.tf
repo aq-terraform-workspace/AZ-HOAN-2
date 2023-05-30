@@ -1,21 +1,7 @@
 # Provider configuration
 terraform {
-  required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "3.58.0"
-    }
-    azurecaf = {
-      source = "aztfmod/azurecaf"
-      version = "2.0.0-preview3"
-    }
-    null = {
-      source = "hashicorp/null"
-    }
-    random = {
-      source = "hashicorp/random"
-    }
-  }
+  required_providers {}
+  required_version = ">= 1.1.0"
 }
 
 provider "azurerm" {
