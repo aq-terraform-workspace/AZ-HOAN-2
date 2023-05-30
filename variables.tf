@@ -31,6 +31,10 @@ variable "vnets" {
   default = {}
 }
 
+variable "public_ip_addresses" {
+  default = {}
+}
+
 #####################################
 ##    Compute
 #####################################

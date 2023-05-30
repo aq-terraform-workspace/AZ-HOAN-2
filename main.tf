@@ -14,7 +14,7 @@ module "caf" {
   networking = {
     network_security_group_definition = var.network_security_group_definition
     vnets = var.vnets
-    # public_ip_addresses               = var.public_ip_addresses
+    public_ip_addresses               = var.public_ip_addresses
     # route_tables = var.route_tables
     # azurerm_routes = var.azurerm_routes
     # Nat GateWay
