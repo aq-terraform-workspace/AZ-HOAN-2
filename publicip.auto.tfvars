@@ -6,5 +6,6 @@ public_ip_addresses = {
     allocation_method       = "Static"
     ip_version              = "IPv4"
     idle_timeout_in_minutes = "4"
+    zones                   = ["No-Zone"]
   }
 }
