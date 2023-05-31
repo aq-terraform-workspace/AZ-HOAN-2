@@ -2,7 +2,7 @@
 private_dns = {
   dns1 = {
     name               = "prefect2.local"
-    resource_group_key = "private_dns_primary"
+    resource_group_key = "shared_svc"
 
     # records = {
     #   cname_records = {
