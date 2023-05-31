@@ -37,5 +37,5 @@ module "caf" {
     aks_clusters               = var.aks_clusters
   }
 
-  # depends_on = [ null_resource.install_az_cli ]
+  depends_on = [ module.azcli ]
 }
