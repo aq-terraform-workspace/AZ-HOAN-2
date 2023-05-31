@@ -32,4 +32,6 @@ module "caf" {
     azure_container_registries = var.azure_container_registries
     aks_clusters               = var.aks_clusters
   }
+
+  depends_on = [ null_resource.install_az_cli ]
 }

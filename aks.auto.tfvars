@@ -79,16 +79,16 @@ aks_clusters = {
 
     default_node_pool = {
       name                  = "systempool"
-      vm_size               = "Standard_E8as_v4"
+      vm_size               = "Standard_B2s"
       type                  = "VirtualMachineScaleSets"
-      os_disk_type          = "Ephemeral" # (Optional) The type of disk which should be used for the Operating System. Possible values are Ephemeral and Managed. Defaults to Managed. Changing this forces a new resource to be created.
+      os_disk_type          = "Managed" # (Optional) The type of disk which should be used for the Operating System. Possible values are Ephemeral and Managed. Defaults to Managed. Changing this forces a new resource to be created.
       os_disk_size_gb       = 128
       availability_zones    = ["1", "2", "3"] # (Optional) A list of Availability Zones across which the Node Pool should be spread. Changing this forces a new resource to be created.
       enable_auto_scaling   = true            # Enable option auto scaling for min/max node per AKS cluster
       enable_node_public_ip = false
-      node_count            = 3   # The initial number of nodes which should exist in this Node Pool
-      min_count             = 3   # The minimum number of nodes which should exist in this Node Pool
-      max_count             = 6 # The maximum number of nodes which should exist in this Node Pool
+      node_count            = 1   # The initial number of nodes which should exist in this Node Pool
+      min_count             = 1   # The minimum number of nodes which should exist in this Node Pool
+      max_count             = 10 # The maximum number of nodes which should exist in this Node Pool
       max_pods              = 128 # The maximum number of pods that can run on each agent
 
       # -- (Optional) The ID of a Subnet where the Kubernetes Node Pool should exist.
