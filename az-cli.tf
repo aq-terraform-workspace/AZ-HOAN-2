@@ -4,7 +4,7 @@ resource "null_resource" "install_az_cli" {
       . /etc/lsb-release
       wget https://packages.microsoft.com/repos/azure-cli/pool/main/a/azure-cli/azure-cli_2.36.0-1~$${DISTRIB_CODENAME}_all.deb
       mkdir ./env && dpkg -x *.deb ./env
-      ./env/usr/bin/az login --service-principal -u "${var.client_id}" -p "${var.client_secret}" -t "${var.tenant_id}"
+      ./env/usr/bin/az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET -t $ARM_TENANT_ID
       ./env/usr/bin/az account show
     EOF
   }
