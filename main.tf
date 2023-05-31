@@ -38,7 +38,7 @@ module "caf" {
   }
 
   tags = merge(
-    module.azcli.depend_value,
+    "managed-by" = module.azcli.depend_value
     var.tags
   )
 }

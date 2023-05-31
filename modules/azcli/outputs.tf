@@ -1,3 +1,3 @@
 output "depend_value" {
-  value = "1"
+  value = "Terraform"
 }
