@@ -49,3 +49,10 @@ variable "private_dns" {
 variable "azure_container_registries" {
   default = {}
 }
+
+#####################################
+##    Others
+#####################################
+variable "keyvaults" {
+  default = {}
+}

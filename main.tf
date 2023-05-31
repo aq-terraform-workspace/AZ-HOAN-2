@@ -10,6 +10,9 @@ module "caf" {
   global_settings = var.global_settings
   resource_groups = var.resource_groups
 
+  # Stuffs
+  keyvaults = var.keyvaults
+
   # Networking
   networking = {
     network_security_group_definition = var.network_security_group_definition
