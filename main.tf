@@ -10,8 +10,10 @@ module "caf" {
   global_settings = var.global_settings
   resource_groups = var.resource_groups
 
-  # Stuffs
-  keyvaults = var.keyvaults
+  # Others
+  keyvaults          = var.keyvaults
+  managed_identities = var.managed_identities
+  role_mapping       = var.role_mapping
 
   # Networking
   networking = {
@@ -28,5 +30,6 @@ module "caf" {
 
   compute = {
     azure_container_registries = var.azure_container_registries
+    aks_clusters               = var.aks_clusters
   }
 }

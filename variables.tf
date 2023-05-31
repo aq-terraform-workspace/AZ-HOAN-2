@@ -50,9 +50,21 @@ variable "azure_container_registries" {
   default = {}
 }
 
+variable "aks_clusters" {
+  default = {}
+}
+
 #####################################
 ##    Others
 #####################################
 variable "keyvaults" {
+  default = {}
+}
+
+variable "managed_identities" {
+  default = {}
+}
+
+variable "role_mapping" {
   default = {}
 }
