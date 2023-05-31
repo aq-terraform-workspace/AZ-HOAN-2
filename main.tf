@@ -37,5 +37,8 @@ module "caf" {
     aks_clusters               = var.aks_clusters
   }
 
-  depends_on = [ module.azcli ]
+  tags = merge(
+    module.azcli.depend_value,
+    var.tags
+  )
 }
