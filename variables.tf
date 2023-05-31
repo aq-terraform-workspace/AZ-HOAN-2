@@ -39,6 +39,10 @@ variable "virtual_network_gateways" {
   default = {}
 }
 
+variable "private_dns" {
+  default = {}
+}
+
 #####################################
 ##    Compute
 #####################################

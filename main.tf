@@ -16,6 +16,7 @@ module "caf" {
     vnets                             = var.vnets
     public_ip_addresses               = var.public_ip_addresses
     virtual_network_gateways          = var.virtual_network_gateways
+    private_dns                       = var.private_dns
     # route_tables = var.route_tables
     # azurerm_routes = var.azurerm_routes
     # Nat GateWay
