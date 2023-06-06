@@ -62,7 +62,7 @@ terraform {
     organization = "aq-tf-cloud"
 
     workspaces {
-      name = "AZ-LAB-1"
+      name = "AZ-HOAN-2"
     }
   }
 }

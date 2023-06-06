@@ -16,35 +16,27 @@ keyvaults = {
     network = {
       bypass         = "AzureServices"
       default_action = "Deny"
-      subnets = {
-        subnet1 = {
-          vnet_key   = "main"
-          subnet_key = "aks"
+    }
+
+    private_endpoints = {
+      # Require enforce_private_link_endpoint_network_policies set to true on the subnet
+      keyvault = {
+        name               = "keyvault"
+        resource_group_key = "shared_svc"
+        vnet_key           = "main"
+        subnet_key         = "private_endpoints"
+
+        private_service_connection = {
+          name                 = "keyvault"
+          is_manual_connection = false
+          subresource_names    = ["vault"]
+        }
+
+        private_dns = {
+          zone_group_name = "default"
+          keys = ["keyvault"]
         }
       }
     }
-
-    # private_endpoints = {
-    #   # Require enforce_private_link_endpoint_network_policies set to true on the subnet
-    #   private-link1 = {
-    #     name               = "keyvault-certificates"
-    #     vnet_key           = "vnet_security"
-    #     subnet_key         = "private_link"
-    #     resource_group_key = "kv_region1"
-
-    #     private_service_connection = {
-    #       name                 = "keyvault-certificates"
-    #       is_manual_connection = false
-    #       subresource_names    = ["vault"]
-    #     }
-
-    #     # private_dns = {
-    #     #   dns1 = {
-    #     #     lz_key          = ""
-    #     #     private_dns_key = ""
-    #     #   }
-    #     # }
-    #   }
-    # }
   }
 }

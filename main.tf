@@ -1,11 +1,6 @@
-# https://github.com/aztfmod/terraform-azurerm-caf/commit/4c3965a7385ff6cf28b8894dbd0f94a56d117ae3
-module "azcli" {
-  source = "./modules/azcli"
-}
-
 module "caf" {
   source  = "aztfmod/caf/azurerm"
-  version = "5.6.9"
+  version = "5.7.0-preview0"
 
   providers = {
     azurerm.vhub = azurerm.vhub
@@ -37,10 +32,5 @@ module "caf" {
     aks_clusters               = var.aks_clusters
   }
 
-  tags = merge(
-    {
-      "managed-by" = module.azcli.depend_value
-    },
-    var.tags
-  )
+  tags = var.tags
 }

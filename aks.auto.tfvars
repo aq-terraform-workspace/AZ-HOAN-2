@@ -15,7 +15,7 @@ aks_clusters = {
       managed_identity_key = "aks"
     }
 
-    kubernetes_version = "1.26"
+    kubernetes_version = "1.26.3"
 
     vnet_key = "main"
 
@@ -26,10 +26,10 @@ aks_clusters = {
       # -- (Optional) Sets up network policy to be used with Azure CNI. Network policy allows us to control the traffic flow between pods. Currently supported values are [calico] and [azure]. 
       network_policy = "azure"
 
-      # dns_service_ip     = "172.20.0.10"   # (Optional) IP address within the Kubernetes service address range that will be used by cluster service discovery (kube-dns).
-      # docker_bridge_cidr = "10.100.0.0/16"  # (Optional) IP address (in CIDR notation) used as the Docker bridge IP address on nodes.
-      # service_cidr       = "172.20.0.0/16" # (Optional) The Network Range used by the Kubernetes service.
-      load_balancer_sku  = "Standard"       # (Optional) Specifies the SKU of the Load Balancer used for this Kubernetes Cluster. Possible values are Basic and Standard. Defaults to Standard.
+      dns_service_ip     = "172.20.0.10"   # (Optional) IP address within the Kubernetes service address range that will be used by cluster service discovery (kube-dns).
+      docker_bridge_cidr = "10.100.0.0/16"  # (Optional) IP address (in CIDR notation) used as the Docker bridge IP address on nodes.
+      service_cidr       = "172.20.0.0/16" # (Optional) The Network Range used by the Kubernetes service.
+      load_balancer_sku  = "standard"       # (Optional) Specifies the SKU of the Load Balancer used for this Kubernetes Cluster. Possible values are Basic and Standard. Defaults to Standard.
       # outbound_type           = "userDefinedRouting"
       load_balancer_profile = {
         # Only one option can be set
@@ -43,15 +43,15 @@ aks_clusters = {
     private_cluster_public_fqdn_enabled = true
 
     # -- Role based access contorl configuration
-    role_based_access_control = {
-      enabled                = true
-      azure_active_directory = []
-    }
+    # role_based_access_control = {
+    #   enabled                = true
+    #   azure_active_directory = []
+    # }
 
-    admin_groups = {
-      # ids = []
-      # azuread_group_keys = ["aks_admins"]
-    }
+    # admin_groups = {
+    #   # ids = []
+    #   # azuread_group_keys = ["aks_admins"]
+    # }
 
     auto_scaler_profile = {
       # Check the default value here 
@@ -88,41 +88,17 @@ aks_clusters = {
       enable_node_public_ip = false
       node_count            = 1   # The initial number of nodes which should exist in this Node Pool
       min_count             = 1   # The minimum number of nodes which should exist in this Node Pool
-      max_count             = 10 # The maximum number of nodes which should exist in this Node Pool
+      max_count             = 3 # The maximum number of nodes which should exist in this Node Pool
       max_pods              = 128 # The maximum number of pods that can run on each agent
 
       # -- (Optional) The ID of a Subnet where the Kubernetes Node Pool should exist.
       subnet_key = "aks"
     }
 
-    # node_pools = {
-    #   spot_pool_1 = {
-    #     name = "spotpool1"
-    #     mode = "User"
-    #     # -- Limnitation: The requested size for resource in location 'southeastasia' zones '1,2,3' for subscription '6df3bb9a-b876-43ee-86b3-dbd691daddcc not available
-    #     # -> Maybe  due to trial subscription
-    #     # priority              = "Spot" # The Priority for Virtual Machines within the Virtual Machine Scale Set that powers this Node Pool
-    #     vm_size               = "Standard_B2ms"
-    #     os_disk_type          = "Managed" # (Optional) The type of disk which should be used for the Operating System. Possible values are Ephemeral and Managed. Defaults to Managed. Changing this forces a new resource to be created.
-    #     os_disk_size_gb       = 128
-    #     availability_zones    = ["1", "2", "3"] # (Optional) A list of Availability Zones across which the Node Pool should be spread. Changing this forces a new resource to be created.
-    #     enable_auto_scaling   = true
-    #     enable_node_public_ip = false
-    #     spot_max_price        = -1 # The maximum price you're willing to pay in USD per Virtual Machine
-    #     node_count            = 1
-    #     node_taints           = []  # (Optional) A list of Kubernetes taints which should be applied to nodes in the agent pool (e.g key=value:NoSchedule). 
-    #     min_count             = 3   # The minimum number of nodes which should exist in this Node Pool
-    #     max_count             = 100 # The maximum number of nodes which should exist in this Node Pool
-    #     max_pods              = 128
-
-    #     # -- (Optional) The ID of a Subnet where the Kubernetes Node Pool should exist.
-    #     subnet_key = "aks"
-
-    #     # -- (Optional) A mapping of tags to assign to the Node Pool.
-    #     tags = {
-    #       "project" = "user services"
-    #     }
-    #   }
-    # }
+    # Enable keyvault secrets provider
+    key_vault_secrets_provider = {
+      secret_rotation_enabled  = true
+      secret_rotation_interval = "2m"
+    }
   }
 }

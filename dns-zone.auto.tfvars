@@ -1,5 +1,38 @@
 
 private_dns = {
+  keyvault = {
+    name               = "privatelink.vaultcore.azure.net"
+    resource_group_key = "shared_svc"
+    vnet_links = {
+      main = {
+        name                 = ""
+        vnet_key             = "main"
+        registration_enabled = false
+      }        
+    }
+  }
+  blob = {
+    name               = "privatelink.blob.core.windows.net"
+    resource_group_key = "shared_svc"
+    vnet_links = {
+      main = {
+        name                 = "main"
+        vnet_key             = "main"
+        registration_enabled = false
+      }        
+    }
+  }
+  acr = {
+    name               = "privatelink.azurecr.io"
+    resource_group_key = "shared_svc"
+    vnet_links = {
+      main = {
+        name                 = "main"
+        vnet_key             = "main"
+        registration_enabled = false
+      }        
+    }
+  }
   dns1 = {
     name               = "prefect2.local"
     resource_group_key = "shared_svc"
