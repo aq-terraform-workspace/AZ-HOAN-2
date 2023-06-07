@@ -1,7 +1,9 @@
 import sys
 import os
 import json
+import subprocess
 from dotenv import load_dotenv
+from jinja2 import Template
 
 # Vars
 azure_envs = ['ARM_TENANT_ID', 'ARM_SUBSCRIPTION_ID', 'ARM_CLIENT_ID', 'ARM_CLIENT_SECRET']
@@ -63,13 +65,38 @@ def az_login():
   else:
     return False
   
+
+def init():
+  if az_login():
+    # Generate backend config file
+    print('Generating backend config file...')
+    vars = {
+      "TFSTATE_RG_NAME" : os.getenv("TFSTATE_RG_NAME"),
+      "TFSTATE_SA_NAME" : os.getenv("TFSTATE_SA_NAME"),
+      "TFSTATE_CONTAINER_NAME": os.getenv("TFSTATE_CONTAINER_NAME")
+    }
+
+    with open('scripts/templates/backend.conf.j2') as f:
+        template = Template(f.read(), keep_trailing_newline=True)
+
+    template_rendered = template.render(vars)
+    output_file = 'backend.conf'
+    with open(output_file, 'w') as f:
+        f.write(template_rendered)
+
+    print('Creating tfstate storage account...')
+    os.system(f'az group create --name {os.getenv("TFSTATE_RG_NAME")} --location {os.getenv("TFSTATE_LOCATION")}')
+    os.system(f'az storage account create --resource-group {os.getenv("TFSTATE_RG_NAME")} --name {os.getenv("TFSTATE_SA_NAME")} --sku Standard_LRS --encryption-services blob')
+    os.environ["ARM_ACCESS_KEY"] = subprocess.getoutput(f'az storage account keys list --resource-group {os.getenv("TFSTATE_RG_NAME")} --account-name {os.getenv("TFSTATE_SA_NAME")} --query [0].value -o tsv')
+    os.system(f'az storage container create --name {os.getenv("TFSTATE_CONTAINER_NAME")} --account-name {os.getenv("TFSTATE_SA_NAME")} --account-key {os.getenv("ARM_ACCESS_KEY")}')
+  
 def terraform(arg):
   if arg == 'init':
     message = f'Running `terraform init` on subscription {os.getenv("ARM_SUBSCRIPTION_ID")} ...'
-    command = f'terraform init'
+    command = f'terraform init -backend-config=backend.conf'
   elif arg == 'init-upgrade':
     message = f'Running `terraform init` on subscription {os.getenv("ARM_SUBSCRIPTION_ID")} ...'
-    command = f'terraform init -upgrade'
+    command = f'terraform init -upgrade -backend-config=backend.conf'
   elif arg == 'plan':
     message = f'Running `terraform plan` on subscription {os.getenv("ARM_SUBSCRIPTION_ID")} ...'
     command = f'terraform plan -input=false -out terraform.tfplan'
@@ -78,9 +105,16 @@ def terraform(arg):
     command = f'terraform apply -input=false terraform.tfplan'
   elif arg == 'destroy':
     message = f'Running `terraform apply` on subscription {os.getenv("ARM_SUBSCRIPTION_ID")} ...'
-    command = f'terraform destroy -input=false -lock=false'
+    command = f'terraform destroy -input=false'
   
   if az_login():
+    # Get backend access key
+    print("Getting Backend access key...")
+    os.environ["ARM_ACCESS_KEY"] = subprocess.getoutput(f'az storage account keys list --resource-group {os.getenv("TFSTATE_RG_NAME")} --account-name {os.getenv("TFSTATE_SA_NAME")} --query [0].value -o tsv')
+    if os.getenv("ARM_ACCESS_KEY") is None:
+      print(f"[ERROR] Cannot get ARM_ACCESS_KEY variable")
+      return False
+    # Run Terraform command
     print(message)
     result = os.system(command)
     if result == 0:
@@ -104,7 +138,7 @@ def app():
   if az_login():
     load_dotenv('addons/.env')
     print('Getting AKS kubernetes config...')
-    result = os.system(f'az aks get-credentials --resource-group {os.getenv("AKS_RESOURCE_GROUP")} --name {os.getenv("AKS_CLUSTER_NAME")} --public-fqdn --admin --overwrite-existing')
+    result = os.system(f'az aks get-credentials --resource-group {os.getenv("AKS_RG_NAME")} --name {os.getenv("AKS_CLUSTER_NAME")} --public-fqdn --admin --overwrite-existing')
     if result == 0:
       # Helm install addons
       print('Adding all required repos...')

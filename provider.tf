@@ -57,12 +57,5 @@ provider "azurerm" {
 # Backend configuration
 # Replace these values to your own
 terraform {
-  backend "remote" {
-    hostname     = "app.terraform.io"
-    organization = "aq-tf-cloud"
-
-    workspaces {
-      name = "AZ-HOAN-2"
-    }
-  }
+  backend "azurerm" {}
 }
