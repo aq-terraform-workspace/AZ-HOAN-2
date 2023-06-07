@@ -1,15 +1,12 @@
 # Prerequisites
 ## Chocolatey
-Please follow the steps in the below link to install Chocolatey (A package manager for Windows)
 ```
 https://chocolatey.org/install
 ```
 ## Python and required modules
-After you have installed Chocolatey successfully, please run the following command to install Python
 ```
 choco install python -y
 ```
-Then please run the below command to install additional python modules
 ```
 pip install -r scripts/requirements.txt
 ```
