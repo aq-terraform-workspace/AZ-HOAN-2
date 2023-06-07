@@ -88,13 +88,12 @@ https://go.microsoft.com/fwlink/?linkid=2117554
 - Connect to the VPN using your Azure Account => Make sure the connection status turn to `GREEN`
 
 ## 5. Install the addons into AKS cluster
-- We need first update the Prefect domain that we will use before install the addons
-- Open `addons/prefect-system/values-server.yaml` => Update the `publicApiUrl` and `ingress.hostname` to the domain you want to use for the Prefect instance
-- Then run the following command to install all addons
+- Update Prefect domain => Open `addons/prefect-system/values-server.yaml` => Update the `publicApiUrl` and `ingress.hostname`
+- Then run
 ```
 python scripts/main.py app
 ```
 
 ## 6. Update DNS record
-- After all the required addons has been installed successfully to the AKS cluster, goes to your domain provider => Update the DNS records that point to the Private IP address of the Load Balancer
+- Visit domain provider => Update the DNS records point to the Private IP address of the Load Balancer
 - The default IP of the Private LB is `10.0.15.100`
