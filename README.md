@@ -28,7 +28,7 @@ This project will use Terraform with AzureRM provider to create all the necessar
 
 Terraform has many methods to authenticate it with your Azure account to create the cloud resources. One of them that we usually use is Service Principal. Please follow the below Steps to create a SP (Service Principal) with the appropriate RBAC role
 
-### 1. Sign in with Global Administrator or User Administrator account
+### 1. Creation
 - Visit https://portal.azure.com
 - Login with either Global Administrator or User Administrator account
 - Goes to `Azure Active Directory` => `App registrations` => `New Registration` => Fill in the required values:
@@ -38,14 +38,14 @@ Terraform has many methods to authenticate it with your Azure account to create 
 - Take note the `Application (client) ID` and `Directory (tenant) ID` to use at `Step 3`
 - Goes to `Certificate & secrets` => `New client secret` => Take note the `Secret value` to use at `Step 3`
 
-### 2. Assign Subscription RBAC role to the Service Principal
+### 2. Assign Subscription RBAC role
 - Goes to `Subscription`
 - Select the subscription you want to provision the resources in there
 - Take note the `Subscription ID` to use at `Step 3`
 - Select `Access control (IAM)` => `Role assignments` => Assign the previous Service Principal as `Owner` role to the subscription
 - Remember to make sure the role is `Owner`, **NOT** `Contributor` since the Terraform code will need some additional permission from Owner (Eg: Set MSI RBAC role, etc...)
 
-### 3. Update the .env file
+### 3. Update `.env` file
 - Open `scripts/.env` inside this repo
 - Update the following ENV vars with the information we have taken note from `Step 1`
 ```
