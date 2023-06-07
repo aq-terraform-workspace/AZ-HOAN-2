@@ -11,7 +11,6 @@ choco install python -y
 pip install -r scripts/requirements.txt
 ```
 ## Other tools
-When `python` already installed, open a new Powershell / Terminal window at the root of this repo and run the following command to install the other required tools
 ```
 python scripts/main.py preq
 ```
@@ -22,7 +21,7 @@ Please follow the steps in this link
 ```
 https://learn.microsoft.com/en-us/azure/vpn-gateway/openvpn-azure-ad-tenant#authorize-the-application
 ```
-Then open `vngw.auto.tfvars` => Fill in your Tenant ID at the line `30` and `31`
+Open `vngw.auto.tfvars` => Fill in your Tenant ID at the line `30` and `31`
 
 ## Azure Service Principal
 This project will use Terraform with AzureRM provider to create all the necessary cloud resources for Prefect (prefect.io) to run on the top of them.
