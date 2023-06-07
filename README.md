@@ -19,8 +19,9 @@ When `python` already installed, open a new Powershell / Terminal window at the 
 python scripts/main.py preq
 ```
 ## Install the Azure VPN Enterprise Application
-- To use the Azure VPN function, you need first to install the Enterprise Application of the Azure VPN into your Azure account
-- Please follow the steps in this link
+To use the Azure VPN function, you need first to install the Enterprise Application of the Azure VPN into your Azure account
+
+Please follow the steps in this link
 ```
 https://learn.microsoft.com/en-us/azure/vpn-gateway/openvpn-azure-ad-tenant#authorize-the-application
 ```
